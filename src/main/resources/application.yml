@@ -1,0 +1,27 @@
+server:
+  port: 9191
+spring:
+  application:
+    name: API-GATEWAY
+    
+  cloud:
+    gateway:
+      routes:
+      - id: PATIENT-SERVICE
+        uri:
+          lb://PATIENT-SERVICE
+        predicates:
+        - Path=/patient/**
+      - id: HOSPITALISATION-SERVICE
+        uri:
+          lb://HOSPITALISATION-SERVICE
+        predicates:
+        - Path=/hospitalisation/**
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
